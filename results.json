@@ -1,22 +1,22 @@
 {
-  "studentNumber": "",
+  "studentNumber": "ZNDNDU007",
 
-  "tokenAAddress": "",
-  "tokenBAddress": "",
-  "task2Address": "",
-  "task3Address": "",
-  "task4Address": "",
+  "tokenAAddress": "0x5e17b14ADd6c386305A32928F985b29bbA34Eff5",
+  "tokenBAddress": "0xe2899bddFD890e320e643044c6b95B9B0b84157A",
+  "task2Address": "0x1c91347f2A44538ce62453BEBd9Aa907C662b4bD",
+  "task3Address": "0x5A86858aA3b595FD6663c2296741eF4cd8BC4d01",
+  "task4Address": "0xEf9f1ACE83dfbB8f559Da621f4aEA72C6EB10eBf",
 
-  "alphaIsCurrency0": null,
-  "poolId": "",
-  "startingSqrtPriceX96": "",
-  "tickAfterOpen": null,
+  "alphaIsCurrency0": true,
+  "poolId": "0x9cf6d5ad54a482dccba7f86f4509dbf32aebb40de321a355847f3ff02eacb879",
+  "startingSqrtPriceX96": "200433158700038344949131041255",
+  "tickAfterOpen": 18563,
 
-  "tickLower": null,
-  "tickUpper": null,
-  "amount0Added": "",
-  "amount1Added": "",
+  "tickLower": 14600,
+  "tickUpper": 22600,
+  "amount0Added": "-722332004209315486817",
+  "amount1Added": "-4548172544717148120088",
 
-  "predictedAmountOut": "",
-  "actualAmountOut": ""
+  "predictedAmountOut": "6396800000000000000",
+  "actualAmountOut": "6395182941401903119"
 }
