@@ -49,41 +49,28 @@ contract Task3Liquidity is ExamBase {
         int24 liveTick = currentTick();
 
         // TODO 3.1 --------------------------------------------------------
-        // Both ticks have to sit on this pool's tick grid. The grid steps in units
-        // of TICK_SPACING, so a tick is on the grid when dividing it by TICK_SPACING
-        // leaves no remainder. The remainder operator in Solidity is %.
-        //
-        // Replace the two conditions marked below.
-
-        require(true /* replace: tickLower is on the grid */, "tickLower is not a multiple of the tick spacing");
-        require(true /* replace: tickUpper is on the grid */, "tickUpper is not a multiple of the tick spacing");
+        // Both ticks have to sit on this pool's tick grid, so dividing each by
+        // TICK_SPACING must leave no remainder.
+        require(tickLower % TICK_SPACING == 0, "tickLower is not a multiple of the tick spacing");
+        require(tickUpper % TICK_SPACING == 0, "tickUpper is not a multiple of the tick spacing");
 
         // TODO 3.2 --------------------------------------------------------
-        // Liquidity is only active while the price sits inside your range. So the
-        // range has to contain the live tick: liveTick must be at or above tickLower,
-        // and strictly below tickUpper.
-        //
-        // Replace the condition marked below.
-
-        require(true /* replace: the range contains liveTick */, "your range does not contain the live tick");
+        // Liquidity is only active while the price sits inside the range, so the
+        // live tick must be at or above tickLower and strictly below tickUpper.
+        require(tickLower <= liveTick && liveTick < tickUpper, "your range does not contain the live tick");
 
         // TODO 3.3 --------------------------------------------------------
-        // Ask the router to add the liquidity. The call looks like this:
-        //
-        //     liquidityRouter.modifyLiquidity(
-        //         poolKey(),
-        //         ModifyLiquidityParams({
-        //             tickLower: tickLower,
-        //             tickUpper: tickUpper,
-        //             liquidityDelta: liquidityDelta,
-        //             salt: bytes32(0)
-        //         }),
-        //         ""
-        //     )
-        //
-        // It gives you back a BalanceDelta. Replace the line below with that call.
-
-        BalanceDelta delta = BalanceDelta.wrap(0); // <-- replace this
+        // Ask the router to add the liquidity.
+        BalanceDelta delta = liquidityRouter.modifyLiquidity(
+            poolKey(),
+            ModifyLiquidityParams({
+                tickLower: tickLower,
+                tickUpper: tickUpper,
+                liquidityDelta: liquidityDelta,
+                salt: bytes32(0)
+            }),
+            ""
+        );
 
         // Provided. amount0 and amount1 come back negative, because the tokens left
         // this contract and went into the pool.
