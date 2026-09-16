@@ -40,16 +40,10 @@ contract Task2Pool is ExamBase {
     /// @notice The starting price that matches the way the pool actually sorted your tokens.
     function startingSqrtPriceX96() public view returns (uint160) {
         // TODO 2.1 --------------------------------------------------------
-        // Your sheet gave you two starting prices, because the pool sorts your two
-        // tokens by address and you do not get to choose which one becomes currency0.
-        //
-        // alphaIsCurrency0() is already written for you. It returns true when your
-        // token A came out as currency0.
-        //
-        // Return whichever of the two prices above is the right one.
-        // Replace the line below.
-
-        return 0; // <-- replace this
+        // The pool sorts the two tokens by address. When token A won and became
+        // currency0 the price is quoted as token B per token A, otherwise it is
+        // quoted the other way round, so the other number is the correct one.
+        return alphaIsCurrency0() ? sqrtPriceIfAlphaIsCurrency0 : sqrtPriceIfBetaIsCurrency0;
     }
 
     /// @notice Opens the pool. You only ever call this once.
@@ -61,23 +55,11 @@ contract Task2Pool is ExamBase {
         require(startingPrice != 0, "startingSqrtPriceX96 still returns zero, finish TODO 2.1 first");
 
         // TODO 2.2 --------------------------------------------------------
-        // Open the pool.
-        //
-        //     poolManager.initialize(key, startingPrice)
-        //
-        // takes the pool key and the starting price, and returns the tick the pool
-        // opened at. Put that returned tick into the variable below.
-        // Replace the line below.
-
-        tick = 0; // <-- replace this
+        // Open the pool and keep the tick it opened at.
+        tick = poolManager.initialize(key, startingPrice);
 
         // TODO 2.3 --------------------------------------------------------
-        // Announce it, so the marker can see what you did. Emit PoolOpened with
-        // these seven values, in this order:
-        //
-        //     poolId(), currency0(), currency1(), FEE, TICK_SPACING, startingPrice, tick
-        //
-        // Write one emit statement below.
-
+        // Announce it, so the marker can see what you did.
+        emit PoolOpened(poolId(), currency0(), currency1(), FEE, TICK_SPACING, startingPrice, tick);
     }
 }
