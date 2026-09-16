@@ -58,16 +58,16 @@ it gave, and explain what caused it.
 
 **Answer:**
 
-My first attempt worked: `addLiquidity(14600, 22600, 10000000000000000000000)` succeeded and
-returned amount0 −722332004209315486817 and amount1 −4548172544717148120088.
+My first attempt worked: `addLiquidity(14600, 22600, 10000000000000000000000)` succeeded,
+returning amount0 −722332004209315486817 and amount1 −4548172544717148120088.
 
-I then deliberately tripped TODO 3.1 by calling `addLiquidity(14601, 22600, ...)`. It reverted with
-"tickLower is not a multiple of the tick spacing".
+I then deliberately tripped TODO 3.1 with `addLiquidity(14601, 22600, 10000000000000000000000)`.
+Remix reported: Reason provided by the contract: "tickLower is not a multiple of the tick spacing".
+The transaction reverted to its initial state and emitted no logs.
 
-My tick spacing is 200, so the only ticks that may hold liquidity are multiples of 200: …, 14400,
-14600, 14800, …. The check is `tickLower % TICK_SPACING == 0`, and 14601 % 200 = 1, so it failed.
-Without my check the protocol itself would still have rejected it, but with a far less readable
-error. The live tick, 18563, was never the problem here.
+My tick spacing is 200, so only multiples of 200 may hold liquidity: …, 14400, 14600, 14800, ….
+My check is `tickLower % TICK_SPACING == 0`, and 14601 % 200 = 1, so it reverted before the router
+was ever called. The live tick, 18563, was never the problem; 14601 still straddles it correctly.
 
 ---
 
