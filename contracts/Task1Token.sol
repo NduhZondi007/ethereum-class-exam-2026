@@ -14,12 +14,6 @@ contract ExamToken is ERC20 {
     {
         // TODO 1.1 --------------------------------------------------------
         // Give the whole initial supply to whoever deploys this token.
-        //
-        // ERC20.sol gives you an internal function:
-        //     _mint(address to, uint256 amount)
-        //
-        // The person deploying is msg.sender. The amount is initialSupply_.
-        // Write one line below.
-
+        _mint(msg.sender, initialSupply_);
     }
 }
